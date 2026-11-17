@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume - Joao Vitor Bravo</title>
+    <link rel="stylesheet" href="Curriculo.css">
+</head>
+<body>
+
+    <main class="container">
+        <header class="cabecalho-perfil">
+            <h1 id="titulo-pagina">Joao Vitor Bravo</h1>
+            <img id="foto-perfil" src="" alt="Foto de Perfil" style="display: none;">
+        </header>
+
+        <section id="conteudo-curriculo">
+            <p>Loading information...</p>
+        </section>
+    </main>
+
+    <script src="Curriculo.js"></script>
+
+    <script>
+        const container = document.getElementById('conteudo-curriculo');
+        const tituloPagina = document.getElementById('titulo-pagina');
+        const fotoEl = document.getElementById('foto-perfil');
+
+        if (typeof infos_curriculos !== 'undefined' && infos_curriculos.length > 0) {
+            container.innerHTML = '';
+
+            infos_curriculos.forEach(registro => {
+                const cv = registro.cv;
+                const info = cv.personalInformation;
+                const resumo = cv.professionalSummary;
+                const experiencias = cv.professionalExperience;
+                const educacao = cv.education;
+                const idiomas = cv.languages;
+                const adicional = cv.additionalInformation;
+                const preferencias = cv.preferences;
+
+                // Atualiza o nome no topo
+                if (info && info.fullName) {
+                    tituloPagina.textContent = info.fullName;
+                }
+
+                // ATIVA A FOTO DE PERFIL
+                if (info && info.profilePhoto) {
+                    fotoEl.src = info.profilePhoto;
+                    fotoEl.style.display = 'block';
+                }
+
+                // 1. Personal Information
+                if (info) {
+                    const cardPessoal = document.createElement('div');
+                    cardPessoal.className = 'card';
+                    cardPessoal.innerHTML = `
+                        <h2>Personal Information</h2>
+                        <p><span class="rotulo">Full Name:</span> ${info.fullName}</p>
+                        <p><span class="rotulo">Professional Title:</span> ${info.professionalTitle}</p>
+                        <p><span class="rotulo">Email:</span> ${info.email}</p>
+                        <p><span class="rotulo">Phone / WhatsApp:</span> ${info.phone}</p>
+                        <p><span class="rotulo">Location:</span> ${info.location.city} - ${info.location.state}, ${info.location.country} (ZIP: ${info.location.address})</p>
+                        <p><span class="rotulo">GitHub:</span> ${info.github}</p>
+                    `;
+                    container.appendChild(cardPessoal);
+                }
+
+                // 2. Professional Summary
+                if (resumo) {
+                    const cardResumo = document.createElement('div');
+                    cardResumo.className = 'card';
+                    cardResumo.innerHTML = `
+                        <h2>Professional Summary</h2>
+                        <p><span class="rotulo">Role:</span> ${resumo.description}</p>
+                        <p><span class="rotulo">Specialization:</span> ${resumo.mainSpecialization}</p>
+                        <p><span class="rotulo">Experience:</span> ${resumo.yearsOfExperience} years</p>
+                        <p><span class="rotulo">Career Objective:</span> ${resumo.careerObjective}</p>
+                    `;
+                    container.appendChild(cardResumo);
+                }
+
+                // 3. Professional Experience
+                if (experiencias && experiencias.length > 0) {
+                    const cardExp = document.createElement('div');
+                    cardExp.className = 'card';
+                    let htmlExp = `<h2>Professional Experience</h2>`;
+
+                    experiencias.forEach(exp => {
+                        if (exp.company || exp.position) {
+                            htmlExp += `
+                                <p><span class="rotulo">Company:</span> ${exp.company}</p>
+                                <p><span class="rotulo">Position:</span> ${exp.position} (${exp.employmentType})</p>
+                                <p><span class="rotulo">Period:</span> ${exp.startDate} - ${exp.current ? 'Present' : exp.endDate}</p>
+                                <p><span class="rotulo">Responsibilities / Tools:</span> ${exp.responsibilities.join(', ')}</p>
+                            `;
+                        }
+                    });
+
+                    cardExp.innerHTML = htmlExp;
+                    container.appendChild(cardExp);
+                }
+
+                // 4. Education
+                if (educacao && educacao.length > 0) {
+                    const cardEdu = document.createElement('div');
+                    cardEdu.className = 'card';
+                    let htmlEdu = `<h2>Education</h2>`;
+
+                    educacao.forEach(edu => {
+                        if (edu.institution) {
+                            htmlEdu += `
+                                <p><span class="rotulo">Institution:</span> ${edu.institution}</p>
+                                <p><span class="rotulo">Field of Study:</span> ${edu.fieldOfStudy}</p>
+                                <p><span class="rotulo">Start Year:</span> ${edu.startDate} (${edu.current ? 'In Progress' : edu.endDate})</p>
+                            `;
+                        }
+                    });
+
+                    cardEdu.innerHTML = htmlEdu;
+                    container.appendChild(cardEdu);
+                }
+
+                // 5. Languages & Preferences
+                if (idiomas || adicional || preferencias) {
+                    const cardExtra = document.createElement('div');
+                    cardExtra.className = 'card';
+                    const listaIdiomas = idiomas.map(l => `${l.name} (${l.proficiency || 'Native'})`).join(', ');
+                    const cargosAlvo = preferencias.targetPositions.join(', ');
+
+                    cardExtra.innerHTML = `
+                        <h2>Languages & Additional Info</h2>
+                        <p><span class="rotulo">Languages:</span> ${listaIdiomas}</p>
+                        <p><span class="rotulo">Target Positions:</span> ${cargosAlvo}</p>
+                        <p><span class="rotulo">Availability:</span> ${adicional.availability} (${adicional.workModel})</p>
+                    `;
+                    container.appendChild(cardExtra);
+                }
+            });
+        } else {
+            container.innerHTML = '<p class="erro">Error: Constant <strong>infos_curriculos</strong> was not found or has a syntax error in Curriculo.js.</p>';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    color: #333;
+    padding: 40px 20px;
+}
+
+.container {
+    max-width: 750px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Deixa o título na esquerda e a foto na parte superior direita */
+.cabecalho-perfil {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.cabecalho-perfil h1 {
+    color: #1a202c;
+    font-size: 1.75rem;
+}
+
+/* Tamanho mínimo ideal para leitura nítida no canto superior direito */
+#foto-perfil {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3182ce;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card {
+    background-color: #f8fafc;
+    border-left: 4px solid #3182ce;
+    padding: 16px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+header h1 {
+    color: #1a202c;
+}
+
+.card h2 {
+    font-size: 1.15rem;
+    color: #1a202c;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 6px;
+}
+
+.card p {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.card p:last-child {
+    margin-bottom: 0;
+}
+
+.rotulo {
+    font-weight: bold;
+    color: #2b6cb0;
+}
+
+.erro {
+    color: #e53e3e;
+    background-color: #fff5f5;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #feb2b2;
+    text-align: center;
+}
